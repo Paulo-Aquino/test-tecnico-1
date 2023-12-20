@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/contacto');
+Route::resource('/contacto', 'App\Http\Controllers\ContactController');
+Route::get('contacto/ajax/serverside', [App\Http\Controllers\ContactController::class, 'indexServerSide'])->name('contact.serverside');
