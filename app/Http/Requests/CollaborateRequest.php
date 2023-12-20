@@ -24,14 +24,22 @@ class CollaborateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required','string', 'max:255'],
             'birthday' => ['required', 'date'],
-            'imagen' => ['required', 'image']
-            
+            'imagen' => ['required', 'image'],
         ];
+
+        // Verificar si la solicitud es de tipo PUT o PATCH (actualización)
+        if ($this->isMethod('put') || $this->isMethod('patch')) {
+            // Excluir la validación de imagen en actualizaciones
+            unset($rules['imagen']);
+        }
+
+        return $rules;
+
     }
 }
